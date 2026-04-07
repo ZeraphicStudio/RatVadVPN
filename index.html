@@ -17,7 +17,7 @@ body {
   color: #e5e7eb;
 }
 
-/* HEADER (FIXED BLUR LIKE IOS) */
+/* HEADER */
 header {
   position: sticky;
   top: 0;
@@ -57,6 +57,13 @@ header {
   gap: 14px;
 }
 
+/* MOBILE FIX */
+@media (max-width: 500px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* CARD */
 .card {
   background: rgba(255,255,255,0.05);
@@ -79,17 +86,31 @@ header {
   background: rgba(255,255,255,0.07);
 }
 
-/* COUNTRY CARD */
+/* SERVER CARD FIX */
 .country {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 10px;
+  cursor: pointer;
 }
 
 .country-left {
   display: flex;
   align-items: center;
   gap: 10px;
+  min-width: 0;
+}
+
+.country-left div {
+  overflow: hidden;
+}
+
+.country-left b {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* FLAG */
@@ -101,6 +122,7 @@ header {
 
 /* PING */
 .ping {
+  flex-shrink: 0;
   font-size: 12px;
   color: #4ade80;
   background: rgba(74,222,128,0.1);
@@ -186,7 +208,22 @@ header {
 <script>
 
 function fakePing(){
-  return Math.floor(Math.random() * 20) + 10; // 10-30ms
+  return Math.floor(Math.random() * 20) + 10;
+}
+
+function server(code,name){
+return `
+<div class="card country">
+  <div class="country-left">
+    <img class="flag" src="https://snipp.ru/cdn/country-flags/png48px/${code}.png">
+    <div>
+      <b>${name}</b>
+      <span style="font-size:12px;color:#9ca3af;">Стабильный сервер</span>
+    </div>
+  </div>
+  <div class="ping">${fakePing()} ms</div>
+</div>
+`;
 }
 
 function home(){
@@ -195,8 +232,8 @@ document.getElementById('content').innerHTML = `
 
 <div class="card">
 <b>RatVad VPN</b><br><br>
-Современный VPN для полной анонимности и защиты в сети.  
-Стабильная скорость, отсутствие логов и мгновенное подключение.  
+Современный VPN для полной анонимности и защиты в сети.<br><br>
+Стабильная скорость, отсутствие логов и мгновенное подключение.<br>
 Подходит для обхода блокировок, игр и безопасного серфинга.
 </div>
 
@@ -204,12 +241,10 @@ document.getElementById('content').innerHTML = `
 <div class="title">Серверы</div>
 
 <div class="grid">
-
 ${server("us","США")}
 ${server("se","Швеция")}
 ${server("ru","Россия")}
 ${server("nl","Нидерланды")}
-
 </div>
 </div>
 
@@ -227,19 +262,19 @@ ${server("nl","Нидерланды")}
 <div class="card">
 <div class="icon"><i class="fa-solid fa-lock"></i></div>
 <b>Сильное шифрование</b><br><br>
-Современные протоколы защищают ваши данные от перехвата.
+Современные протоколы защищают ваши данные.
 </div>
 
 <div class="card">
 <div class="icon"><i class="fa-solid fa-shield"></i></div>
 <b>Максимальная защита</b><br><br>
-Скрытие IP и защита от утечек обеспечивают безопасность.
+Скрытие IP и защита от утечек.
 </div>
 
 <div class="card">
 <div class="icon"><i class="fa-solid fa-bolt"></i></div>
 <b>Высокая скорость</b><br><br>
-Минимальный пинг и стабильное соединение без лагов.
+Минимальный пинг и стабильная работа.
 </div>
 
 </div>
@@ -252,13 +287,13 @@ ${server("nl","Нидерланды")}
 
 <div class="card">
 <b>14 дней</b><br><br>
-Идеально для теста сервиса<br><br>
+Идеально для теста<br><br>
 <b>80 ₽</b>
 </div>
 
 <div class="card">
 <b>30 дней</b><br><br>
-Лучший баланс цены и удобства<br><br>
+Лучший выбор<br><br>
 <b>150 ₽</b>
 </div>
 
@@ -274,21 +309,6 @@ ${server("nl","Нидерланды")}
 `;
 }
 
-function server(code,name){
-return `
-<div class="card country">
-  <div class="country-left">
-    <img class="flag" src="https://snipp.ru/cdn/country-flags/png48px/${code}.png">
-    <div>
-      <b>${name}</b><br>
-      <span style="font-size:12px;color:#9ca3af;">Стабильный сервер</span>
-    </div>
-  </div>
-  <div class="ping">${fakePing()} ms</div>
-</div>
-`;
-}
-
 function connect(){
 setActive(1);
 document.getElementById('content').innerHTML = `
@@ -296,14 +316,9 @@ document.getElementById('content').innerHTML = `
 <div class="card">
 <h2>Подключение</h2>
 
-<p>
-Подключение занимает меньше минуты.  
-Всё делается через Telegram без сложных настроек.
-</p>
-
-<p>
-После оплаты вы сразу получите доступ и сможете подключиться.
-</p>
+<p>Подключение занимает меньше минуты.</p>
+<p>Всё делается через Telegram без сложных настроек.</p>
+<p>После оплаты вы сразу получите доступ.</p>
 
 <a class="button" href="https://t.me/RatVadBot" target="_blank">Открыть бота</a>
 <a class="button" href="https://t.me/RatVad" target="_blank">Канал</a>
@@ -325,9 +340,7 @@ document.getElementById('content').innerHTML = `
 <p><b>3.</b> Оплати</p>
 <p><b>4.</b> Подключись</p>
 
-<p>
-Если возникнут проблемы — поддержка всегда поможет.
-</p>
+<p>Поддержка всегда поможет при необходимости.</p>
 
 </div>
 
