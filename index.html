@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RatVad VPN</title>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Orbitron:wght@600&display=swap" rel="stylesheet">
+
+<style>
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: radial-gradient(circle at top, #0f172a, #020617);
+  color: #e5e7eb;
+}
+
+/* HEADER (FIXED BLUR LIKE IOS) */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  padding: 18px;
+  text-align: center;
+  font-size: 28px;
+  font-weight: 700;
+  font-family: 'Orbitron', sans-serif;
+  letter-spacing: 1px;
+  background: rgba(15,23,42,0.6);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+/* CONTAINER */
+.container {
+  padding: 20px;
+  padding-bottom: 80px;
+}
+
+.section {
+  margin-bottom: 30px;
+}
+
+.title {
+  font-size: 22px;
+  margin-bottom: 14px;
+  font-weight: 700;
+  color: #cbd5f5;
+}
+
+/* GRID */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+/* CARD */
+.card {
+  background: rgba(255,255,255,0.05);
+  border-radius: 20px;
+  padding: 18px;
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.07);
+  transition: 0.3s;
+  animation: fadeUp 0.5s ease;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.card b {
+  font-size: 16px;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  background: rgba(255,255,255,0.07);
+}
+
+/* COUNTRY CARD */
+.country {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.country-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* FLAG */
+.flag {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+/* PING */
+.ping {
+  font-size: 12px;
+  color: #4ade80;
+  background: rgba(74,222,128,0.1);
+  padding: 4px 8px;
+  border-radius: 10px;
+}
+
+/* ICON */
+.icon {
+  font-size: 22px;
+  color: #60a5fa;
+  margin-bottom: 10px;
+}
+
+/* BUTTON */
+.button {
+  display: block;
+  text-align: center;
+  padding: 15px;
+  margin-top: 15px;
+  background: linear-gradient(90deg, #2563eb, #3b82f6);
+  color: white;
+  border-radius: 14px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.button:hover {
+  transform: scale(1.05);
+}
+
+/* MENU */
+.bottom-menu {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: rgba(15,23,42,0.7);
+  backdrop-filter: blur(14px);
+  display: flex;
+  justify-content: space-around;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  padding: 10px 0;
+}
+
+.menu-item {
+  text-align: center;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.menu-item i {
+  font-size: 18px;
+  display: block;
+  margin-bottom: 3px;
+}
+
+.menu-item.active {
+  color: #3b82f6;
+  font-weight: bold;
+}
+
+@keyframes fadeUp {
+  from {opacity:0; transform:translateY(20px)}
+  to {opacity:1; transform:translateY(0)}
+}
+
+</style>
+</head>
+
+<body>
+
+<header>RatVad VPN</header>
+
+<div class="container" id="content"></div>
+
+<div class="bottom-menu">
+  <div class="menu-item active" onclick="home()"><i class="fa-solid fa-shield"></i>О нас</div>
+  <div class="menu-item" onclick="connect()"><i class="fa-solid fa-plug"></i>Подключить</div>
+  <div class="menu-item" onclick="guide()"><i class="fa-solid fa-book"></i>Инструкция</div>
+</div>
+
+<script>
+
+function fakePing(){
+  return Math.floor(Math.random() * 20) + 10; // 10-30ms
+}
+
+function home(){
+setActive(0);
+document.getElementById('content').innerHTML = `
+
+<div class="card">
+<b>RatVad VPN</b><br><br>
+Современный VPN для полной анонимности и защиты в сети.  
+Стабильная скорость, отсутствие логов и мгновенное подключение.  
+Подходит для обхода блокировок, игр и безопасного серфинга.
+</div>
+
+<div class="section">
+<div class="title">Серверы</div>
+
+<div class="grid">
+
+${server("us","США")}
+${server("se","Швеция")}
+${server("ru","Россия")}
+${server("nl","Нидерланды")}
+
+</div>
+</div>
+
+<div class="section">
+<div class="title">Преимущества</div>
+
+<div class="grid">
+
+<div class="card">
+<div class="icon"><i class="fa-solid fa-user-secret"></i></div>
+<b>Полная анонимность</b><br><br>
+Мы не ведём логи и не отслеживаем активность пользователей.
+</div>
+
+<div class="card">
+<div class="icon"><i class="fa-solid fa-lock"></i></div>
+<b>Сильное шифрование</b><br><br>
+Современные протоколы защищают ваши данные от перехвата.
+</div>
+
+<div class="card">
+<div class="icon"><i class="fa-solid fa-shield"></i></div>
+<b>Максимальная защита</b><br><br>
+Скрытие IP и защита от утечек обеспечивают безопасность.
+</div>
+
+<div class="card">
+<div class="icon"><i class="fa-solid fa-bolt"></i></div>
+<b>Высокая скорость</b><br><br>
+Минимальный пинг и стабильное соединение без лагов.
+</div>
+
+</div>
+</div>
+
+<div class="section">
+<div class="title">Тарифы</div>
+
+<div class="grid">
+
+<div class="card">
+<b>14 дней</b><br><br>
+Идеально для теста сервиса<br><br>
+<b>80 ₽</b>
+</div>
+
+<div class="card">
+<b>30 дней</b><br><br>
+Лучший баланс цены и удобства<br><br>
+<b>150 ₽</b>
+</div>
+
+<div class="card">
+<b>60 дней</b><br><br>
+Максимальная выгода<br><br>
+<b>270 ₽</b>
+</div>
+
+</div>
+</div>
+
+`;
+}
+
+function server(code,name){
+return `
+<div class="card country">
+  <div class="country-left">
+    <img class="flag" src="https://snipp.ru/cdn/country-flags/png48px/${code}.png">
+    <div>
+      <b>${name}</b><br>
+      <span style="font-size:12px;color:#9ca3af;">Стабильный сервер</span>
+    </div>
+  </div>
+  <div class="ping">${fakePing()} ms</div>
+</div>
+`;
+}
+
+function connect(){
+setActive(1);
+document.getElementById('content').innerHTML = `
+
+<div class="card">
+<h2>Подключение</h2>
+
+<p>
+Подключение занимает меньше минуты.  
+Всё делается через Telegram без сложных настроек.
+</p>
+
+<p>
+После оплаты вы сразу получите доступ и сможете подключиться.
+</p>
+
+<a class="button" href="https://t.me/RatVadBot" target="_blank">Открыть бота</a>
+<a class="button" href="https://t.me/RatVad" target="_blank">Канал</a>
+
+</div>
+
+`;
+}
+
+function guide(){
+setActive(2);
+document.getElementById('content').innerHTML = `
+
+<div class="card">
+<h2>Инструкция</h2>
+
+<p><b>1.</b> Открой Telegram-бота</p>
+<p><b>2.</b> Выбери тариф</p>
+<p><b>3.</b> Оплати</p>
+<p><b>4.</b> Подключись</p>
+
+<p>
+Если возникнут проблемы — поддержка всегда поможет.
+</p>
+
+</div>
+
+`;
+}
+
+function setActive(i){
+let items=document.querySelectorAll('.menu-item');
+items.forEach((el,index)=>{
+  el.classList.toggle('active', index===i);
+});
+}
+
+home();
+
+</script>
+
+</body>
+</html>
