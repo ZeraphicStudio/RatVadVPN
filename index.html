@@ -63,7 +63,7 @@ header {
 }
 
 .section {
-  margin-top: 35px; /* фикс наезда */
+  margin-top: 35px;
 }
 
 /* TITLE */
@@ -108,7 +108,7 @@ header {
 /* SERVER */
 .country {
   display: flex;
-  flex-direction: column; /* ВАЖНО */
+  flex-direction: column;
   gap: 10px;
 }
 
@@ -138,7 +138,6 @@ header {
   border-radius: 10px;
 }
 
-/* НОВОЕ — подпись снизу */
 .server-desc {
   font-size: 12px;
   color: #9ca3af;
@@ -229,7 +228,6 @@ function fakePing(){
 function server(code,name){
 return `
 <div class="card country">
-
   <div class="country-top">
     <div class="country-left">
       <img class="flag" src="https://snipp.ru/cdn/country-flags/png48px/${code}.png">
@@ -237,9 +235,7 @@ return `
     </div>
     <div class="ping">${fakePing()} ms</div>
   </div>
-
   <div class="server-desc">Стабильный пинг</div>
-
 </div>
 `;
 }
@@ -259,7 +255,6 @@ document.getElementById('content').innerHTML = `
 
 <div class="section">
 <div class="title">Серверы</div>
-
 <div class="grid">
 ${server("us","США")}
 ${server("se","Швеция")}
@@ -270,28 +265,25 @@ ${server("nl","Нидерланды")}
 
 <div class="section">
 <div class="title">Тарифы</div>
-
 <div class="grid">
+<div class="card"><b>14 дней</b><br><br>Идеально для теста<br><br><b>80 ₽</b></div>
+<div class="card"><b>30 дней</b><br><br>Лучший выбор<br><br><b>150 ₽</b></div>
+<div class="card"><b>60 дней</b><br><br>Максимальная выгода<br><br><b>270 ₽</b></div>
+</div>
+</div>
+
+<!-- НОВЫЙ БЛОК -->
+<div class="section">
+<div class="title">Наш канал</div>
 
 <div class="card">
-<b>14 дней</b><br><br>
-Идеально для теста<br><br>
-<b>80 ₽</b>
+<b>Telegram канал RatVad</b><br><br>
+Новости, обновления и важная информация.<br>
+А также розыгрыши и бонусы для пользователей 🔥
+
+<a class="button" href="https://t.me/RatVad" target="_blank">Перейти в канал</a>
 </div>
 
-<div class="card">
-<b>30 дней</b><br><br>
-Лучший выбор<br><br>
-<b>150 ₽</b>
-</div>
-
-<div class="card">
-<b>60 дней</b><br><br>
-Максимальная выгода<br><br>
-<b>270 ₽</b>
-</div>
-
-</div>
 </div>
 
 `;
@@ -302,8 +294,13 @@ setActive(1);
 document.getElementById('content').innerHTML = `
 <div class="card">
 <h2>Подключение</h2>
+
 <p>Подключение занимает меньше минуты.</p>
+<p>Всё делается через Telegram.</p>
+
 <a class="button" href="https://t.me/RatVadBot" target="_blank">Открыть бота</a>
+<a class="button" href="https://t.me/RatVad" target="_blank">Канал</a>
+
 </div>
 `;
 }
